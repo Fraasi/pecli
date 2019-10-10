@@ -1,6 +1,7 @@
 {
 	"name": "pecli",
 	"version": "0.0.1",
+	"homepage": "https://github.com/fraasi/pecli",
 	"license": "MIT",
 	"bin": "cli.js",
 	"engines": {
@@ -9,7 +10,7 @@
 	"scripts": {
 		"start": "node cli.js",
 		"test": "echo no test specified",
-		"sdf": " echo sdfs"
+		"sdf": "echo sdfs"
 	},
 	"files": [
 		"cli.js",
