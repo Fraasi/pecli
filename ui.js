@@ -7,52 +7,47 @@ import { Text, Color, Box, Static, useInput, useApp } from 'ink'
 import SelectInput from 'ink-select-input'
 import packageJson from './package.json'
 
-const getKeyList = (obj) => {
+const getKeyList = (obj, setCurrentKey) => {
 	const listItems = Object.keys(obj).map(key => {
 		return {
 			label: `${key.padEnd(25, '.')}${obj[key]}`,
 			value: key,
 		}
 	})
+	if (setCurrentKey) setCurrentKey(listItems[0].value)
 	return listItems
 }
-
 
 const App = () => {
 
 	const [keyList, setKeyList] = useState(getKeyList(packageJson))
 	const [currentKey, setCurrentKey] = useState(keyList[0].value)
+	const [prevKey, setPrevKey] = useState(currentKey)
 	const { exit } = useApp()
 
 	useInput((input, key) => {
 		if (key.escape) exit()
-
 		if (key.rightArrow) {
-			if (currentKey && packageJson[currentKey] instanceof Object) {
-				setKeyList(getKeyList(packageJson[currentKey]))
+			if (packageJson[currentKey] && packageJson[currentKey] instanceof Object) {
+				setPrevKey(currentKey)
+				setKeyList(getKeyList(packageJson[currentKey], setCurrentKey))
 				return
 			}
 		}
 		if (key.leftArrow) {
-			getKeyList(packageJson)
+			setKeyList(getKeyList(packageJson, setCurrentKey))
 		}
-
 	})
 
 	const handleSelect = ({ value }) => {
-		// console.log('value:', value)
-		// console.log('cyrrkey', currentKey)
+		console.log('values p c:', prevKey, currentKey)
+		if (prevKey === 'scripts') {
+			child_process.execSync(`npm run ${value}`, {
+				stdio: 'inherit',
+			})
+			// exit()
+		}
 
-		// if (value && packageJson[value] instanceof Object) {
-		// 	setList(getListItems(packageJson[value]))
-		// 	return
-		// }
-		// console.log('nou handle, exit')
-		// setList(getListItems(packageJson))
-		// child_process.execSync(`npm run ${value}`, {
-		// 	stdio: 'inherit',
-		// })
-		// if (??) exit()
 	}
 
 	return (
