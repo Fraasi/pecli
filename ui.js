@@ -30,8 +30,8 @@ const App = () => {
 		if (key.rightArrow) {
 			if (currentObj[currentKey] && (currentObj[currentKey] instanceof Object)) {
 				setPrevKey(currentKey)
+				setCurrentKey(Object.keys(currentObj[currentKey])[0])
 				setCurrentObj(currentObj[currentKey])
-				setCurrentKey(Object.keys(currentObj)[0])
 				return
 			}
 		}
@@ -41,14 +41,16 @@ const App = () => {
 	})
 
 	const handleSelect = ({ value }) => {
-		console.log('values p c:', prevKey, currentKey)
+		// console.log('values p c:', prevKey, currentKey)
 		if (prevKey === 'scripts') {
 			child_process.execSync(`npm run ${value}`, {
 				stdio: 'inherit',
 			})
 			exitFlag = true
-			process.exit(0)
-			// exit()
+			// process.exit(0)
+			exit(() => {
+				console.log('exit')
+			})
 			// return
 		}
 		if (isValidUrl(currentObj[value])) {
@@ -62,9 +64,9 @@ const App = () => {
 	return (
 		<React.Fragment>
 			<Static>
-				<Box marginLeft={5} marginTop={1} height={3}>
-					<Color red>
-						<Text bold>
+				<Box marginLeft={7} marginTop={1} height={3}>
+					<Color magenta>
+						<Text bold underline>
 							Package.json explorer cli
 						</Text>
 					</Color>
@@ -72,11 +74,10 @@ const App = () => {
 			</Static>
 
 			<Box marginTop={0} flexDirection="column">
-				{/* <Color rgb={[0,70,0]}> */}
 					<SelectInput
 						items={Object.keys(currentObj).map(key => {
 							return {
-								label: `${key.padEnd(25, '.')}${currentObj[key]}`,
+								label: `${key.padEnd(30, '.')}${currentObj[key]}`,
 								value: key,
 							}
 						})}
@@ -93,9 +94,7 @@ const App = () => {
 							</Color>
 						)}
 						/>
-				{/* </Color> */}
 			</Box>
-
 		</React.Fragment>
 	)
 }
