@@ -7,53 +7,43 @@ import { Text, Color, Box, Static, useInput, useApp } from 'ink'
 import SelectInput from 'ink-select-input'
 import packageJson from './package.json'
 
-const getKeyList = (obj, setCurrentKey) => {
-	const listItems = Object.keys(obj).map(key => {
-		return {
-			label: `${key.padEnd(25, '.')}${obj[key]}`,
-			value: key,
-		}
-	})
-	if (setCurrentKey) setCurrentKey(listItems[0].value)
-	return listItems
-}
 
 const App = () => {
 
-	const [keyList, setKeyList] = useState(getKeyList(packageJson))
-	const [currentKey, setCurrentKey] = useState(keyList[0].value)
+	const [currentObj, setCurrentObj] = useState(packageJson)
+	const [currentKey, setCurrentKey] = useState(Object.keys(currentObj)[0])
 	const [prevKey, setPrevKey] = useState(currentKey)
 	const { exit } = useApp()
 
 	useInput((input, key) => {
 		if (key.escape) exit()
 		if (key.rightArrow) {
-			if (packageJson[currentKey] && packageJson[currentKey] instanceof Object) {
+			if (currentObj[currentKey] && (currentObj[currentKey] instanceof Object)) {
 				setPrevKey(currentKey)
-				setKeyList(getKeyList(packageJson[currentKey], setCurrentKey))
+				setCurrentObj(currentObj[currentKey])
 				return
 			}
 		}
 		if (key.leftArrow) {
-			setKeyList(getKeyList(packageJson, setCurrentKey))
+			setCurrentObj(packageJson)
 		}
 	})
 
 	const handleSelect = ({ value }) => {
 		console.log('values p c:', prevKey, currentKey)
 		if (prevKey === 'scripts') {
-			child_process.execSync(`npm run ${value}`, {
+			child_process.exec(`npm run ${value}`, {
 				stdio: 'inherit',
 			})
-			// exit()
+			exit()
 		}
 
 	}
 
 	return (
 		<React.Fragment>
-			<Static> */}
-				<Box marginLeft={1} width={4} height={2}>
+			<Static>
+				<Box marginLeft={3} width={4} height={2}>
 					<Color blue>
 						<Text bold>
 							Package.json explorer cli
@@ -66,7 +56,12 @@ const App = () => {
 				{/* <Static> */}
 
 				<SelectInput
-					items={keyList}
+					items={Object.keys(currentObj).map(key => {
+						return {
+							label: `${key.padEnd(25, '.')}${currentObj[key]}`,
+							value: key,
+						}
+					})}
 					onSelect={(value) => { handleSelect(value) }}
 					onHighlight={(key) => { setCurrentKey(key.value) }}
 				/>
