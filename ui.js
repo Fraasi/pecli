@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react'
 import child_process from 'child_process'
-import { Text, Color, Box, Static, useInput, useApp, AppContext } from 'ink'
+import { Text, Color, Box, Static, useInput, useApp } from 'ink'
 import SelectInput from 'ink-select-input'
 import packageJson from './package.json'
 
@@ -22,13 +22,14 @@ const App = () => {
 	const [currentObj, setCurrentObj] = useState(packageJson)
 	const [currentKey, setCurrentKey] = useState(Object.keys(currentObj)[0])
 	const [prevKey, setPrevKey] = useState(currentKey)
+	const [stack, setStack] = useState([])
 	const { exit } = useApp()
-	let exitFlag = false // prevents last render
 
 	useInput((input, key) => {
 		if (key.escape) exit()
 		if (key.rightArrow) {
 			if (currentObj[currentKey] && (currentObj[currentKey] instanceof Object)) {
+				setStack([...stack, currentKey])
 				setPrevKey(currentKey)
 				setCurrentKey(Object.keys(currentObj[currentKey])[0])
 				setCurrentObj(currentObj[currentKey])
@@ -36,21 +37,31 @@ const App = () => {
 			}
 		}
 		if (key.leftArrow) {
-			setCurrentObj(packageJson)
+			if (stack.length > 1) {
+				stack.pop()
+				const newCurObj = stack.reduce((obj, key) => {
+					return obj[key]
+				}, packageJson)				
+				setStack([...stack])
+				setCurrentObj(newCurObj)
+			}
+			else {
+				setStack([])
+				setCurrentObj(packageJson)
+			}
 		}
+		return
 	})
 
 	const handleSelect = ({ value }) => {
-		// console.log('values p c:', prevKey, currentKey)
+		console.log('values p c:', prevKey, currentKey, stack)
 		if (prevKey === 'scripts') {
 			child_process.execSync(`npm run ${value}`, {
 				stdio: 'inherit',
 			})
-			exitFlag = true
+
 			// process.exit(0)
-			exit(() => {
-				console.log('exit')
-			})
+			exit()
 			// return
 		}
 		if (isValidUrl(currentObj[value])) {
@@ -60,7 +71,6 @@ const App = () => {
 		}
 	}
 
-	if (exitFlag) return null
 	return (
 		<React.Fragment>
 			<Static>
@@ -74,26 +84,27 @@ const App = () => {
 			</Static>
 
 			<Box marginTop={0} flexDirection="column">
-					<SelectInput
-						items={Object.keys(currentObj).map(key => {
-							return {
-								label: `${key.padEnd(30, '.')}${currentObj[key]}`,
-								value: key,
-							}
-						})}
-						onSelect={handleSelect}
-						onHighlight={(key) => { setCurrentKey(key.value) }}
-						indicatorComponent={({isSelected}) => (
-							<Color yellow={isSelected}>
-								{isSelected ? ` > ` : '   '}
-							</Color>
-						)}
-						itemComponent={({isSelected, label}) => (
-							<Color yellow={isSelected}>
-								{label}
-							</Color>
-						)}
-						/>
+				<SelectInput
+					items={Object.keys(currentObj).map(key => {
+						return {
+							label: `${key.padEnd(30, '.')}${currentObj[key]}`,
+							value: key,
+						}
+					})}
+					// initialIndex={stack.length}
+					onSelect={handleSelect}
+					onHighlight={(key) => { setCurrentKey(key.value) }}
+					indicatorComponent={({ isSelected }) => (
+						<Color yellow={isSelected}>
+							{isSelected ? ` > ` : '   '}
+						</Color>
+					)}
+					itemComponent={({ isSelected, label }) => (
+						<Color yellow={isSelected}>
+							{label}
+						</Color>
+					)}
+				/>
 			</Box>
 		</React.Fragment>
 	)
