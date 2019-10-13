@@ -1,16 +1,25 @@
 {
 	"name": "pecli",
 	"version": "0.2.0",
+	"author": "Fraasi (https://fraasi.github.io)",
 	"homepage": "https://github.com/fraasi/pecli",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/fraasi/pecli.git"
+	},
 	"license": "MIT",
+	"description": "node cli to inspect package.json",
+	"bugs": {
+		"url": "https://github.com/fraasi/pecli/issues"
+	},
+	"keywords": ["node", "cli", "command", "line", "package.json", "inspect", "explore", "explorer"],
 	"bin": "cli.js",
 	"engines": {
 		"node": ">=8"
 	},
 	"scripts": {
 		"start": "node cli.js",
-		"test": "echo no test specified",
-		"sdf": "echo sdfs"
+		"test": "echo no test specified"
 	},
 	"files": [
 		"cli.js",
@@ -44,9 +53,16 @@
 			]
 		]
 	},
-	"test": {
+	"test-object": {
 		"test1": {
 			"test2": "test3"
 		}
-	}
+	},
+	"test-array": [
+		["test1", "test2"],
+		"test-string",
+		{
+			"a": 1, "b": 2
+		}
+	]
 }

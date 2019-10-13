@@ -54,12 +54,13 @@ const App = () => {
 	})
 
 	const handleSelect = ({ value }) => {
-		console.log('values p c:', prevKey, currentKey, stack)
+		// console.log('values p c:', prevKey, currentKey)
+		// console.log('stack', stack, stack[stack.length - 1][1] )
 		if (prevKey === 'scripts') {
 			child_process.execSync(`npm run ${value}`, {
 				stdio: 'inherit',
 			})
-
+			// theres some weird rerendering after npm run, read exec docs
 			// process.exit(0)
 			exit()
 			// return
@@ -91,7 +92,6 @@ const App = () => {
 							value: key,
 						}
 					})}
-					// initialIndex={stack.length}
 					onSelect={handleSelect}
 					onHighlight={(key) => { setCurrentKey(key.value) }}
 					indicatorComponent={({ isSelected }) => (
@@ -109,6 +109,5 @@ const App = () => {
 		</React.Fragment>
 	)
 }
-
 
 module.exports = App
