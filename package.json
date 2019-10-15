@@ -1,7 +1,7 @@
 {
 	"name": "pecli",
-	"version": "0.2.0",
-	"author": "Fraasi (https://fraasi.github.io)",
+	"version": "0.3.2",
+	"author": "Fraasi",
 	"homepage": "https://github.com/fraasi/pecli",
 	"repository": {
 		"type": "git",
@@ -12,18 +12,28 @@
 	"bugs": {
 		"url": "https://github.com/fraasi/pecli/issues"
 	},
-	"keywords": ["node", "cli", "command", "line", "package.json", "inspect", "explore", "explorer"],
-	"bin": "pecli",
+	"keywords": [
+		"node",
+		"cli",
+		"command",
+		"line",
+		"package.json",
+		"inspect",
+		"explore",
+		"explorer"
+	],
+	"main": "./lib/cli.js",
+	"bin": "./lib/cli.js",
 	"engines": {
 		"node": ">=8"
 	},
 	"scripts": {
-		"start": "node cli.js",
-		"test": "echo no test specified"
+		"start": "node src/cli.js",
+		"build": "babel src -d lib",
+		"test": "echo \"Error: no test specified\""
 	},
 	"files": [
-		"cli.js",
-		"ui.js"
+		"lib/*"
 	],
 	"dependencies": {
 		"import-jsx": "^3.0.0",
@@ -33,6 +43,7 @@
 		"react": "^16.10.2"
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.6.4",
 		"@babel/preset-env": "^7.6.3",
 		"@babel/preset-react": "^7.6.3",
 		"@babel/register": "^7.6.2",

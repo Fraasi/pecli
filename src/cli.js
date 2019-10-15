@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 'use strict'
 try {
-	require('./package.json')
+	require('../package.json')
 } catch(err) {
 	console.error('Error:', err.message)
 	process.exit(1)
 }
-require('@babel/register');
+// require('@babel/register')
 const React = require('react')
 const importJsx = require('import-jsx')
 const {render} = require('ink')

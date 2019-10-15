@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import child_process from 'child_process'
 import { Text, Color, Box, Static, useInput, useApp } from 'ink'
 import SelectInput from 'ink-select-input'
-import packageJson from './package.json'
+import packageJson from '../package.json'
 
 const App = () => {
 
