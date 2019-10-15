@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-'use strict'
 
+'use strict'
+// doesnt work with require
 import React, { useState } from 'react'
-import child_process from 'child_process'
 import { Text, Color, Box, Static, useInput, useApp } from 'ink'
 import SelectInput from 'ink-select-input'
-import packageJson from '../package.json'
+const child_process = require('child_process')
+const path = require('path')
+const packageJson = require(path.join(process.cwd(), '/package.json'))
 
 const App = () => {
 

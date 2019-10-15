@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 'use strict'
+const path = require('path')
 try {
-	require('../package.json')
+	require(path.join(process.cwd(), '/package.json'))
 } catch(err) {
 	console.error('Error:', err.message)
 	process.exit(1)
