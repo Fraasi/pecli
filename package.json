@@ -13,7 +13,7 @@
 		"url": "https://github.com/fraasi/pecli/issues"
 	},
 	"keywords": ["node", "cli", "command", "line", "package.json", "inspect", "explore", "explorer"],
-	"bin": "cli.js",
+	"bin": "pecli",
 	"engines": {
 		"node": ">=8"
 	},
@@ -52,17 +52,5 @@
 				}
 			]
 		]
-	},
-	"test-object": {
-		"test1": {
-			"test2": "test3"
-		}
-	},
-	"test-array": [
-		["test1", "test2"],
-		"test-string",
-		{
-			"a": 1, "b": 2
-		}
-	]
+	}
 }

@@ -1,21 +1,11 @@
 /* eslint-disable no-unused-vars */
-// 'use strict'
+'use strict'
 
 import React, { useState } from 'react'
 import child_process from 'child_process'
 import { Text, Color, Box, Static, useInput, useApp } from 'ink'
 import SelectInput from 'ink-select-input'
 import packageJson from './package.json'
-
-const isValidUrl = (string) => {
-	try {
-		const url = new URL(string)
-		if (url.host) return true
-		else return false
-	} catch (_) {
-		return false
-	}
-}
 
 const App = () => {
 
@@ -53,20 +43,26 @@ const App = () => {
 		return
 	})
 
+	const isValidUrl = (string) => {
+		try {
+			const url = new URL(string)
+			if (url.host) return true
+			else return false
+		} catch (_) {
+			return false
+		}
+	}
+
 	const handleSelect = ({ value }) => {
-		// console.log('values p c:', prevKey, currentKey)
-		// console.log('stack', stack, stack[stack.length - 1][1] )
 		if (prevKey === 'scripts') {
+			exit()
 			child_process.execSync(`npm run ${value}`, {
 				stdio: 'inherit',
 			})
-			// theres some weird rerendering after npm run, read exec docs
-			// process.exit(0)
-			exit()
-			// return
 		}
 		if (isValidUrl(currentObj[value])) {
-			child_process.exec(`start ${currentObj[value]}`, {
+			exit()
+			child_process.execSync(`start ${currentObj[value]}`, {
 				stdio: 'inherit',
 			})
 		}
@@ -78,7 +74,7 @@ const App = () => {
 				<Box marginLeft={7} marginTop={1} height={3}>
 					<Color magenta>
 						<Text bold underline>
-							Package.json explorer cli
+							package.json explorer cli
 						</Text>
 					</Color>
 				</Box>
