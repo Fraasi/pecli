@@ -7,7 +7,7 @@ import { Text, Color, Box, Static, useInput, useApp } from 'ink'
 import SelectInput from 'ink-select-input'
 const child_process = require('child_process')
 const path = require('path')
-const packageJson = require(path.join(process.cwd(), '/package.json'))
+const packageJson = require(path.join(process.cwd(), 'package.json'))
 
 const App = () => {
 

@@ -2,11 +2,12 @@
 'use strict'
 const path = require('path')
 try {
-	require(path.join(process.cwd(), '/package.json'))
+	require(path.join(process.cwd(), 'package.json'))
 } catch(err) {
 	console.error('Error:', err.message)
 	process.exit(1)
 }
+// comment next line out before build
 // require('@babel/register')
 const React = require('react')
 const importJsx = require('import-jsx')
