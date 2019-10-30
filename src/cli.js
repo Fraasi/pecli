@@ -7,8 +7,9 @@ try {
 	console.error('Error:', err.message)
 	process.exit(1)
 }
-// comment next line out before build
-// require('@babel/register')
+if (process.env.NODE_ENV !== 'production') {
+	require('@babel/register')
+}
 const React = require('react')
 const importJsx = require('import-jsx')
 const {render} = require('ink')
@@ -25,13 +26,13 @@ const cli = meow(`
 		Press enter to open an url or run a script
 		Esc or ctrl + c to exit program
 
-	Options
-		--help, Show this help
-
 	Note
 		Package.json must be in the folder
 		the command is run, otherwise
-		throws an error
+		throws a hissy fit
+
+	Options
+		--help, Show this help
 `)
 
 render(React.createElement(App, cli.flags))

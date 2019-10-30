@@ -18,12 +18,13 @@ $ npm i -g fraasi/pecli
 		Press enter to open an url or run a script
 		Esc or ctrl + c to exit program
 
-	Options
-		--help, Show this help
-
 	Note
 		Package.json must be in the folder
 		the command is run, otherwise
-		throws an error
+		throws a hissy fit
+
+	Options
+		--help, Show this help
 ```
+
 ![pecli-cli.gif](pecli-cli.gif)
