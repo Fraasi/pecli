@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 'use strict'
 // doesnt work with require
 import React, { useState } from 'react'
@@ -31,9 +29,7 @@ const App = () => {
 		if (key.leftArrow) {
 			if (stack.length > 1) {
 				stack.pop()
-				const newCurObj = stack.reduce((obj, key) => {
-					return obj[key]
-				}, packageJson)				
+				const newCurObj = stack.reduce((obj, key) => obj[key], packageJson)				
 				setStack([...stack])
 				setCurrentObj(newCurObj)
 			}
@@ -45,9 +41,9 @@ const App = () => {
 		return
 	})
 
-	const isValidUrl = (string) => {
+	const isValidUrl = (value) => {
 		try {
-			const url = new URL(string)
+			const url = new URL(value)
 			if (url.host) return true
 			else return false
 		} catch (_) {
@@ -73,14 +69,22 @@ const App = () => {
 	return (
 		<React.Fragment>
 			<Static>
-				<Box marginLeft={7} marginTop={1} height={3}>
+				<Box marginLeft={7} marginTop={1} height={2}>
 					<Color magenta>
 						<Text bold underline>
-							package.json explorer cli
+							package.json explorer
 						</Text>
 					</Color>
 				</Box>
 			</Static>
+
+			<Box marginLeft={7} marginBottom={1}>
+				<Color yellow>
+					<Text>
+						{ stack.length < 1 ? '{ * }' : `{ ${stack.map(val => val).toString()} }`}						
+					</Text>
+				</Color>
+			</Box>
 
 			<Box marginTop={0} flexDirection="column">
 				<SelectInput

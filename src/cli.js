@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 const path = require('path')
+const { version } = require('../package.json')
 try {
 	require(path.join(process.cwd(), 'package.json'))
 } catch(err) {
@@ -18,6 +19,8 @@ const meow = require('meow')
 const App = importJsx('./App.js')
 
 const cli = meow(`
+	v${version}
+
 	Usage
 		$ pecli
 

@@ -1,6 +1,6 @@
 {
 	"name": "pecli",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"author": "Fraasi",
 	"homepage": "https://github.com/fraasi/pecli",
 	"repository": {
@@ -19,7 +19,6 @@
 		"line",
 		"package.json",
 		"inspect",
-		"explore",
 		"explorer"
 	],
 	"main": "./lib/cli.js",
@@ -40,16 +39,16 @@
 		"ink": "^2.5.0",
 		"ink-select-input": "^3.1.2",
 		"meow": "^5.0.0",
-		"react": "^16.10.2"
+		"react": "^16.11.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.6.4",
 		"@babel/preset-env": "^7.6.3",
 		"@babel/preset-react": "^7.6.3",
 		"@babel/register": "^7.6.2",
-		"eslint": "^6.5.1",
+		"eslint": "^6.6.0",
 		"eslint-plugin-react": "^7.16.0",
-		"eslint-plugin-react-hooks": "^2.1.2"
+		"eslint-plugin-react-hooks": "^2.2.0"
 	},
 	"babel": {
 		"presets": [
