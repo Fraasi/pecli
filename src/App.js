@@ -81,7 +81,7 @@ const App = () => {
 			<Box marginLeft={7} marginBottom={1}>
 				<Color yellow>
 					<Text>
-						{ stack.length < 1 ? '{ * }' : `{ ${stack.map(val => val).toString()} }`}						
+						{ stack.length < 1 ? '{ * }' : `{ ${stack.join(' > ')} }`}		
 					</Text>
 				</Color>
 			</Box>

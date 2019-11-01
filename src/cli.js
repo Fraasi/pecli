@@ -8,7 +8,7 @@ try {
 	console.error('Error:', err.message)
 	process.exit(1)
 }
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
 	require('@babel/register')
 }
 const React = require('react')
