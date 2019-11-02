@@ -5,10 +5,22 @@ import { Text, Color, Box, Static, useInput, useApp } from 'ink'
 import SelectInput from 'ink-select-input'
 const child_process = require('child_process')
 const path = require('path')
-const packageJson = require(path.join(process.cwd(), 'package.json'))
 
-const App = () => {
 
+const App = (flags) => {
+
+	if (Object.keys(flags).length > 0) {
+		console.error('\n Unknown flag, try --help')
+		return null
+	}
+
+	let packageJson
+	try {
+		packageJson = require(path.join(process.cwd(), 'package.json'))
+	} catch (e) {
+		console.error('\n No package.json in current directory!')
+		process.exit(1)
+	}
 	const [currentObj, setCurrentObj] = useState(packageJson)
 	const [currentKey, setCurrentKey] = useState(Object.keys(currentObj)[0])
 	const [prevKey, setPrevKey] = useState(currentKey)
@@ -29,7 +41,7 @@ const App = () => {
 		if (key.leftArrow) {
 			if (stack.length > 1) {
 				stack.pop()
-				const newCurObj = stack.reduce((obj, key) => obj[key], packageJson)				
+				const newCurObj = stack.reduce((obj, key) => obj[key], packageJson)
 				setStack([...stack])
 				setCurrentObj(newCurObj)
 			}
@@ -81,7 +93,7 @@ const App = () => {
 			<Box marginLeft={7} marginBottom={1}>
 				<Color yellow>
 					<Text>
-						{ stack.length < 1 ? '{ * }' : `{ ${stack.join(' > ')} }`}		
+						{stack.length < 1 ? '{ * }' : `{ ${stack.join(' > ')} }`}
 					</Text>
 				</Color>
 			</Box>

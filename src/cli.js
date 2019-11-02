@@ -1,13 +1,6 @@
 #!/usr/bin/env node
 'use strict'
-const path = require('path')
-const { version } = require('../package.json')
-try {
-	require(path.join(process.cwd(), 'package.json'))
-} catch(err) {
-	console.error('\n Error: No package.json in current directory!')
-	process.exit(1)
-}
+
 if (process.env.NODE_ENV === 'development') {
 	require('@babel/register')
 }
@@ -16,11 +9,7 @@ const importJsx = require('import-jsx')
 const {render} = require('ink')
 const meow = require('meow')
 
-const App = importJsx('./App.js')
-
 const cli = meow(`
-	v${version}
-
 	Usage
 		$ pecli
 
@@ -35,7 +24,18 @@ const cli = meow(`
 		throws a hissy fit
 
 	Options
-		--help, Show this help
-`)
+		--help, -h Show this help
+		--version, -v Print out version number
+`, {
+	flags: {
+		help: {
+			alias: 'h'
+		},
+		version: {
+			alias: 'v'
+		}
+	}
+})
 
+const App = importJsx('./App.js')
 render(React.createElement(App, cli.flags))

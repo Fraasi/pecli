@@ -13,8 +13,6 @@ $ pecli --help
 
   node cli to inspect package.json
 
-  v1.0.0
-
   Usage
         $ pecli
 
@@ -29,7 +27,8 @@ $ pecli --help
         throws a hissy fit
 
   Options
-        --help, Show this help
+        --help, -h Show this help
+        --version, -v Print out version number
 ```
 
 ![pecli-cli.gif](pecli-cli.gif)
