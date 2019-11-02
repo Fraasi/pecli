@@ -5,7 +5,7 @@ const { version } = require('../package.json')
 try {
 	require(path.join(process.cwd(), 'package.json'))
 } catch(err) {
-	console.error('Error:', err.message)
+	console.error('\n Error: No package.json in current directory!')
 	process.exit(1)
 }
 if (process.env.NODE_ENV === 'development') {
